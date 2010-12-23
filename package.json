@@ -1,0 +1,32 @@
+{
+   "name": "node-markdown-cli",
+   "description": "node based command line markdown parser",
+   "tags": [
+       "markdown",
+       "command",
+       "command line",
+       "parser",
+       "parsing",
+       "cli",
+       "node" //what else? ;)
+   ],
+   "version": "0.1.0",
+   "author": {
+      "name" : "Gregor Schwab", 
+      "email" : "gregor@connect-mi.com",
+      "url" : "http://www.connect-mi.com"  
+   }
+   "repository": {
+       "type": "git",
+       "url": "http://github.com/dotmaster/node-markdown-cli.git"
+   },
+   "bugs": "http://github.com/dotmaster/node-markdown-cli/issues",
+   "engines": [
+       "node >= 0.3.0"
+   ],
+   "main": "node-markdown-cli.js",
+   "dependencies": {
+       "markdown-js": ">=",
+       "node-optimist": ">="              
+    }
+}
