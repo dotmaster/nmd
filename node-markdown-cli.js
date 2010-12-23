@@ -1,4 +1,13 @@
 #!/usr/bin/env node
+/*
+ * MarkdownParser
+ *
+ * Simplified BSD License (@see License)
+ * @author        Gregor Schwab
+ * @copyright     (c) 2010 Gregor Schwab
+ * Usage Command Line: ./node-markdown-cli fileName A ... (@see Readme.md)
+ * @requires optimist, node-markdown
+ */
 var sys = require('sys');
 var md = require("node-markdown").Markdown;
 var path=require('path'), fs=require('fs');

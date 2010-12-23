@@ -1,17 +1,17 @@
 # Node Markdown command line parser  #
 
-node-markdown-cli is a command line parser for node.
+node-markdown-cli is a super simpel command line parser for node. No strings attached.
 
 
 ## Usage ##
 
 Usage is simple:
 npm install node-markdown-cli
-node node-markdown-cli.js filename.md
+./node-markdown-cli.js filename.md (@see --help to get more options)
 
 ## Dependencies ##
 
-node-markdown-cli depends on markdown-js and options.
+node-markdown-cli depends on node-markdown and optimist.
 
 
 
