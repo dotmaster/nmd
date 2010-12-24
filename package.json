@@ -10,7 +10,7 @@
        "cli",
        "node" //what else ? ;)
    ],
-   "version": "0.1.2",
+   "version": "0.1.3",
    "author": {
       "name" : "Gregor Schwab", 
       "email" : "gregor@connect-mi.com",
@@ -28,6 +28,6 @@
    "license" : "Simplified BSD (see License)",
    "dependencies": {
        "markdown-js": ">=",
-       "node-optimist": ">="              
+       "optimist": ">="              
     }
 }
