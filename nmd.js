@@ -9,11 +9,12 @@
  * @requires optimist, node-markdown
  */
 var sys = require('sys');
+var constants = require('constants');
 var md = require("node-markdown").Markdown;
 var path=require('path'), fs=require('fs');
 var argv = require('optimist').usage('Usage: $0 filenameA [filenameB ... -o fileNameOutA -o fileNameOutB]').argv;
 //console.log(sys.inspect(argv));
-if (argv.help || argv._[0]=="/?"||!(argv._.length)){console.log('Usage: '+argv.$0+' filenameA filenameB ...')}
+if (argv.help || argv._[0]=="/?"||!(argv._.length)){console.log('Usage: '+argv.$0+' filenameA [filenameB ... -o fileNameOutA -o fileNameOutB]')}
 new MarkdownParser().parse(argv._);
 function MarkdownParser(){
   var logging=false; //set to true to turn on logging
@@ -22,7 +23,8 @@ function MarkdownParser(){
   this.parse=function parse(fileArr, callback){
     // Relative or absolute path
     function respondError(msg) {
-      log("Error: "+sys.inspect(msg));
+      if (msg.errno===constants.ENOENT) {console.log(msg.message);}
+      else console.log("Error: "+sys.inspect(msg));
       //throw new Error("MarkdownParser Error: "+msg);
     }    
     try {
