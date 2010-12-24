@@ -10,7 +10,7 @@
        "cli",
        "node" //what else ? ;)
    ],
-   "version": "0.1.6",
+   "version": "0.1.7",
    "author": {
       "name" : "Gregor Schwab", 
       "email" : "gregor@connect-mi.com",
