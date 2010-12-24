@@ -16,11 +16,11 @@ var argv = require('optimist').usage('Usage: $0 filenameA [filenameB ... -o file
 if (argv.help || argv._[0]=="/?"||!(argv._.length)){console.log('Usage: '+argv.$0+' filenameA filenameB ...')}
 new MarkdownParser().parse(argv._);
 function MarkdownParser(){
-  var logging=true;
+  var logging=false; //set to true to turn on logging
   var log=function(){if(logging)console.log('MarkdownParser', sys.inspect(arguments));}
   
   this.parse=function parse(fileArr, callback){
-    // Absolute path
+    // Relative or absolute path
     function respondError(msg) {
       log("Error: "+sys.inspect(msg));
       //throw new Error("MarkdownParser Error: "+msg);
@@ -50,7 +50,7 @@ function MarkdownParser(){
             writeToFile(html)
           }
 
-          function writeToFile(html){//write the file as .less.css
+          function writeToFile(html){//write the file to disk
               var buf=new Buffer(html, encoding='utf8');
             var outputName="";
             if(!(argv.o instanceof Array) && index==0){outputName=argv.o}
