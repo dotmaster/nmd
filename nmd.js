@@ -15,7 +15,7 @@ var path=require('path'), fs=require('fs');
 var command=process.ARGV[1];
 var lastPath=path.basename(command);
 var argv = require('optimist').usage('Usage: $0 filenameA [filenameB ... -o fileNameOutA -o fileNameOutB]').argv;
-//console.log(sys.inspect(argv, false, 20));
+console.log(sys.inspect(argv, false, 20));
 if (!((/.*nmd/).test(argv['$0']))) return; //if not called from commandline
 //console.log(sys.inspect(argv));
 if (argv.help || argv._[0]=="/?"||!(argv._.length)){console.log('Usage: '+argv.$0+' filenameA [filenameB ... -o fileNameOutA -o fileNameOutB]')}
@@ -59,10 +59,11 @@ function MarkdownParser(){
 
           function writeToFile(html){//write the file to disk
               var buf=new Buffer(html, encoding='utf8');
-            var outputName="";
-            if(!(argv.o instanceof Array) && index==0){outputName=input.replace(/([^\.]*)$/,'html')}
-            else if (!(outputName=argv.o[index])){
-              outputName=input.replace(/([^\.]*)$/,'html')              
+         console.log(sys.inspect(index, false, 20));
+            var outputName = (typeof argv.o == 'string' && index === 0)? argv.o : argv.o && argv.o[index]; //if ther is only one argument inr argv.o optimist doesn't create an array
+            if( outputName ){outputName=outputName.replace(/([^\.]+)$/,'html')}
+            else {
+              outputName=input.replace(/([^\.]+)$/,'html')              
             }
             log(argv.o instanceof Array, sys.inspect(argv), outputName)
             fs.open(outputName, 'w', stats.mode, function (e, fd) {
