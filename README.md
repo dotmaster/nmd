@@ -4,7 +4,7 @@ node-markdown-cli is a super simpel command line parser for node. No strings att
 
 ## Version ##
 
-please install the latest version >=0.1.7
+please install the latest version >=0.1.9
 
 ## Usage ##
 

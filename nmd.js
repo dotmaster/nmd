@@ -15,11 +15,13 @@ var path=require('path'), fs=require('fs');
 var command=process.ARGV[1];
 var lastPath=path.basename(command);
 var argv = require('optimist').usage('Usage: $0 filenameA [filenameB ... -o fileNameOutA -o fileNameOutB]').argv;
-if ($0 !=='nmd') return; //if not called from commandline
+//console.log(sys.inspect(argv, false, 20));
+if (!((/.*nmd/).test(argv['$0']))) return; //if not called from commandline
 //console.log(sys.inspect(argv));
 if (argv.help || argv._[0]=="/?"||!(argv._.length)){console.log('Usage: '+argv.$0+' filenameA [filenameB ... -o fileNameOutA -o fileNameOutB]')}
 new MarkdownParser().parse(argv._);
-module.exports = function MarkdownParser(){
+module.exports = MarkdownParser;
+function MarkdownParser(){
   var logging=false; //set to true to turn on logging
   var log=function(){if(logging)console.log('MarkdownParser', sys.inspect(arguments));}
   
