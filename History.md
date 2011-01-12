@@ -11,7 +11,7 @@
 * renamed node-mardown-cli to nmd
 * added packages json for support in nmd
 
-0.2.0 / 2011-01-11
+0.2.1 / 2011-01-11
 ------------------
 
 * support for usage as a module
