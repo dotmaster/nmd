@@ -15,25 +15,34 @@ var path=require('path'), fs=require('fs');
 var command=process.ARGV[1];
 var lastPath=path.basename(command);
 var argv = require('optimist').usage('Usage: $0 filenameA [filenameB ... -o fileNameOutA -o fileNameOutB]').argv;
-//console.log(sys.inspect(argv, false, 20));
-if (!((/.*nmd/).test(argv['$0']))) return; //if not called from commandline
-//console.log(sys.inspect(argv));
-if (argv.help || argv._[0]=="/?"||!(argv._.length)){console.log('Usage: '+argv.$0+' filenameA [filenameB ... -o fileNameOutA -o fileNameOutB]')}
-new MarkdownParser().parse(argv._);
+var cl=true; //command line
+//console.log(sys.inspect((/.*nmd/).test(argv['$0']), false, 20));
+if (!((/.*nmd/).test(argv['$0']))) {var cl=false;} //if not called from commandline
+if(cl){
+  //argv.o normalization
+  //if there is only one argument inr argv.o optimist doesn't create an array
+  if(typeof argv.o == 'string') var tmp = argv.o; argv.o=[];argv.o[0]=tmp;
+  //console.log(sys.inspect(argv, false, 20));
+  if (argv.help || argv._[0]=="/?"||!(argv._.length)){console.log('Usage: '+argv.$0+' filenameA [filenameB ... -o fileNameOutA -o fileNameOutB]')}
+  new MarkdownParser().parse(argv._, argv.o);
+}
+
 module.exports = MarkdownParser;
 function MarkdownParser(){
   var logging=false; //set to true to turn on logging
   var log=function(){if(logging)console.log('MarkdownParser', sys.inspect(arguments));}
   
-  this.parse=function parse(fileArr, callback){
+  this.parse=function parse(fileArr, outArr, callback){
+    //console.log(sys.inspect(fileArr, false, 20), sys.inspect(outArr, false, 20));
     // Relative or absolute path
-    function respondError(msg) {
-      if (msg.errno===constants.ENOENT) {console.log(msg.message);}
+    function respondError(msg, context) {
+      if (msg.errno===constants.ENOENT) {console.log('ERROR: no such file \"'+ msg.path + '\" perhaps you wanted to use option -o');}
       else console.log("Error: "+sys.inspect(msg));
       //throw new Error("MarkdownParser Error: "+msg);
     }    
-    try {
-      fileArr.forEach(function(fileName, index, fileArr){ 
+
+    fileArr.forEach(function(fileName, index, fileArr){ 
+      try {        
         //input = path.join(__dirname, path.basename(fileName));
         input=fileName;
         log("parsing: "+input); 
@@ -43,6 +52,7 @@ function MarkdownParser(){
           }
           log("stats: "+sys.inspect(stats)); 
           fs.open(input, 'r', stats.mode, function (err, fd) {
+            if (err) return;
             fs.read(fd, stats.size, 0, "utf8", function (e, data) {
               if (e) {
                 return respondError(e)
@@ -59,7 +69,7 @@ function MarkdownParser(){
 
           function writeToFile(html){//write the file to disk
             var buf=new Buffer(html, encoding='utf8');
-            var outputName = (typeof argv.o == 'string' && index === 0)? argv.o : argv.o && argv.o[index]; //if ther is only one argument inr argv.o optimist doesn't create an array
+            var outputName = outArr[index]; //if ther is only one argument inr argv.o optimist doesn't create an array
             if( outputName ){outputName=outputName.replace(/([^\.]+)$/,'html')}
             else {
               outputName=input.replace(/([^\.]+)$/,'html')              
@@ -79,12 +89,13 @@ function MarkdownParser(){
             })        
           }
         })//end fs.stat
-      })//end forEach
-    }catch(e){
-      respondError(e);
-    }//end try..catch
+      }catch(e){
+        respondError(e);
+      }//end try..catch        
+    })//end forEach
+
     
-    if (callback) callback();
+    if (!cl && callback) callback();
   }//end parse
 }
        
