@@ -17,3 +17,9 @@
 * support for usage as a module
 * some bug fixes regarding option parsing
 
+0.2.3 / 2011-03-13
+------------------
+
+* fixed package.json to unbreak npm (thanks to [mcantelon](mcantelon@gmail.com))
+
+

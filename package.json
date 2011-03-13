@@ -8,9 +8,9 @@
        "parser",
        "parsing",
        "cli",
-       "node" //what else ? ;)
+       "node"
    ],
-   "version": "0.2.2",
+   "version": "0.2.3",
    "author": {
       "name" : "Gregor Schwab", 
       "email" : "gregor@connect-mi.com",
