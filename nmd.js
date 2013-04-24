@@ -12,7 +12,7 @@ var sys = require('sys');
 var constants = require('constants');
 var md = require("node-markdown").Markdown;
 var path=require('path'), fs=require('fs');
-var command=process.ARGV[1];
+var command=process.argv[1];
 var lastPath=path.basename(command);
 var argv = require('optimist').usage('Usage: $0 filenameA [filenameB ... -o fileNameOutA -o fileNameOutB]').argv;
 var cl=true; //command line
